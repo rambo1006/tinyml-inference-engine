@@ -36,10 +36,10 @@ def quantized_layer(x_q, W_q, bias, x_scale, x_zp, W_scale, W_zp):
 
 W1 = np.array([[ 1.0, -1.0],
                [-1.0,  1.0]], dtype=np.float32)
-b1 = np.array([0.0, 0.0],    dtype=np.float32)
+b1 = np.array([0.0, 0.0], dtype=np.float32)
 W2 = np.array([[-1.0, -1.0],
                [ 1.0,  1.0]], dtype=np.float32)
-b2 = np.array([0.5, -0.5],   dtype=np.float32)
+b2 = np.array([0.5, -0.5], dtype=np.float32)
 
 inputs  = [(0,0), (0,1), (1,0), (1,1)]
 targets = [0, 1, 1, 0]
