@@ -25,6 +25,8 @@ The C engine's output was checked against all 300 real validation samples (not a
 
 Full results, including memory footprint, ARM cross-compilation, and an honest discussion of where the accuracy ceiling actually comes from, are in [`results/benchmark.md`](results/benchmark.md).
 
+![Training loss and validation accuracy](results/training_curves.png)
+
 ---
 
 ## Architecture
@@ -43,6 +45,12 @@ Full results, including memory footprint, ARM cross-compilation, and an honest d
 ```
 
 Each layer's weights and each activation tensor has its own int8 scale factor and zero-point, computed independently from that tensor's actual min/max — not a single global scale across the network. This is what keeps the float32 → int8 accuracy drop to 1.3%, versus the larger drop a naive single-scale scheme typically produces.
+
+![Quantization bit-depth sweep](results/quantization_analysis.png)
+
+The three keywords are visually distinguishable in MFCC space even before training, which is what makes this classification task tractable with a small model:
+
+![MFCC features per keyword](results/mfcc_visualization.png)
 
 ---
 
