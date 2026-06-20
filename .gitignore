@@ -205,3 +205,10 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# C build artifacts
+*.o
+*.out
+inference_engine
+inference_engine_arm.o
+inference_engine_deploy.o
