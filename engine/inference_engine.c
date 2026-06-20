@@ -4,7 +4,16 @@
 #include <time.h>
 
 #include "../weights/weights.h"
+
+/* Build with -DRUN_VALIDATION to include the 300-sample validation set
+ * and a main() that checks accuracy. Without this flag, only the
+ * deployable inference engine itself is compiled -- this is the
+ * number that matters for real flash/RAM budgeting, since a real
+ * device pulls one MFCC vector at a time from a microphone, not a
+ * pre-loaded validation set. */
+#ifdef RUN_VALIDATION
 #include "../weights/validation_data.h"
+#endif
 
 /* ---------------------------------------------------------------------
  * Buffers
@@ -176,14 +185,20 @@ static void memory_report(void) {
 }
 
 /* ---------------------------------------------------------------------
- * main
+ * main (validation build only)
  *
  * Runs inference over the REAL validation set (exported from
  * data/X_val.npy / data/y_val.npy by python/export_validation_data.py)
- * and reports accuracy + average inference time. This is the actual
- * Week 5 deliverable: proving the C engine reproduces Python's int8
+ * and reports accuracy + average inference time. This is the Week 5
+ * deliverable: proving the C engine reproduces Python's int8
  * validation accuracy, not just that it runs.
+ *
+ * Build with: gcc -DRUN_VALIDATION ...
+ * Not compiled into the ARM deployment-size build, since a real
+ * device never has 300 pre-loaded samples sitting in flash -- it
+ * pulls one MFCC vector at a time from a microphone.
  * ------------------------------------------------------------------- */
+#ifdef RUN_VALIDATION
 int main(void) {
     printf("=== TinyML Inference Engine ===\n\n");
     memory_report();
@@ -221,3 +236,4 @@ int main(void) {
 
     return 0;
 }
+#endif /* RUN_VALIDATION */
